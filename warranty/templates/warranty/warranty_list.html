@@ -1,0 +1,187 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warranty Centre - Registered Assets</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            font-size: 28px;
+        }
+        
+        .header-right {
+            text-align: right;
+        }
+        
+        .header-right p {
+            margin: 5px 0;
+        }
+        
+        .header-right a {
+            color: #fff;
+            text-decoration: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .header-right a:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        th {
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background-color: #d4edda;
+            color: #155724;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+        
+        .empty-state p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>Warranty Centre</h1>
+            <p>Manage Your Asset Warranties</p>
+        </div>
+        <div class="header-right">
+            {% if user.is_authenticated %}
+                <p>Welcome, <strong>{{ user.username }}</strong>!</p>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="content">
+        <h2>Registered Assets</h2>
+        
+        {% if user.is_authenticated %}
+            {% if registrations %}
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Asset ID</th>
+                                <th>Asset Name</th>
+                                <th>Serial Number</th>
+                                <th>Purchase Date</th>
+                                <th>Registered By</th>
+                                <th>Registration Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for registration in registrations %}
+                            <tr>
+                                <td><strong>{{ registration.asset_id }}</strong></td>
+                                <td>{{ registration.asset_name }}</td>
+                                <td>{{ registration.serial_number }}</td>
+                                <td>{{ registration.purchase_date|date:"Y-m-d" }}</td>
+                                <td>{{ registration.registered_by.username|default:"System" }}</td>
+                                <td>{{ registration.registration_date|date:"Y-m-d H:i" }}</td>
+                                <td>
+                                    <span class="status-badge">Warranty Registered</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <h3>No Warranties Found</h3>
+                    <p>You haven't registered any assets for warranty yet.</p>
+                    <p>Use the API or admin panel to register your first warranty.</p>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="empty-state">
+                <h3>Please Log In</h3>
+                <p>You need to be logged in to view warranty information.</p>
+                <a href="{% url 'login' %}" style="color: #667eea; text-decoration: none;">Go to Login</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
