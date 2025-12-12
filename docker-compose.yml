@@ -29,7 +29,7 @@ services:
     environment:
       - DEBUG=False
       - SECRET_KEY=django-insecure-l$^w!u!_l5qx2kl7^vdes&aujg((eer&wj8cl#&1edub+c_4(x
-      - ALLOWED_HOSTS=localhost,127.0.0.1,web,nginx
+      - ALLOWED_HOSTS=localhost,127.0.0.1,web,nginx,server6.eport.ws,164.92.73.227
       - DATABASE_URL=postgresql://postgres:root@db:5432/warranty_db
       - POSTGRES_NAME=warranty_db
       - POSTGRES_USER=postgres
