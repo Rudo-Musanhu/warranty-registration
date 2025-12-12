@@ -22,7 +22,8 @@ services:
     build: .
     container_name: warranty_django
     command: >
-      sh -c "python manage.py migrate &&
+      sh -c "python manage.py makemigrations &&
+             python manage.py migrate &&
              python manage.py collectstatic --noinput &&
              gunicorn warranty_backend.wsgi:application --bind 0.0.0.0:8000"
     environment:
