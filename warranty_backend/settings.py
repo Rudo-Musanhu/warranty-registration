@@ -70,6 +70,10 @@ CSRF_TRUSTED_ORIGINS = [
     "https://assetwarranty-a4x8ralbc-rudo-musanhus-projects.vercel.app",
 ]
 
+# Ensure cookies are only sent over HTTPS
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = [
     'accept',
