@@ -63,11 +63,11 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3001",
     "http://127.0.0.1:3001",
     "https://server6.eport.ws",
-    "https://assetwarranty-a4x8ralbc-rudo-musanhus-projects.vercel.app" 
+    "https://assetwarranty.vercel.app" 
 ]
 CSRF_TRUSTED_ORIGINS = [
     "https://server6.eport.ws",
-    "https://assetwarranty-a4x8ralbc-rudo-musanhus-projects.vercel.app",
+    "https://assetwarranty.vercel.app",
 ]
 
 # Ensure cookies are only sent over HTTPS
